@@ -10,7 +10,7 @@ from sqlalchemy.orm import validates
 from flask_login import login_user, login_required, logout_user, current_user, UserMixin, LoginManager
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///urls.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///urls.sqlite'
 app.config['SECRET_KEY'] = "python flask"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
