@@ -8,15 +8,19 @@ import string
 import random
 from sqlalchemy.orm import validates
 from flask_login import login_user, login_required, logout_user, current_user, UserMixin, LoginManager
+from dotenv import load_dotenv
+import os
+from dotenv import dotenv_values
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///urls.sqlite'
-app.config['SECRET_KEY'] = "python flask"
+load_dotenv()
+# app.config.from_pyfile('config.py')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URL')
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db = SQLAlchemy(app)
 
-
-db.init_app(app)
 
 login_manager = LoginManager()
 login_manager.login_view = 'login'
@@ -150,7 +154,8 @@ def shortlink():
                 orl = Urls(original_link=input_url, created_by=current_user.id)
                 db.session.add(orl)
                 db.session.commit()
-                listall = Urls.query.filter(Urls.created_by == current_user.id).order_by(Urls.created_on.desc()).limit(5).all()
+                listall = Urls.query.filter(Urls.created_by == current_user.id).order_by(Urls.created_on.desc()).limit(
+                    5).all()
                 return render_template('url.html', url_=orl, result=True, five_link=listall)
             except AssertionError:
                 flash('Enter a Valid Url')
