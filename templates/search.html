@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %} Search {% endblock %}
+{% block head %}
+<meta charset="UTF-8">
+<title>Search</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+{% endblock %}
+{% block style %}
+h3{
+margin: auto;
+margin-top: 50px;
+margin-bottom: 100px;
+}
+{% endblock %}
+{% block content %}
+<div id="container">
+    <div class="short-link">
+        <h2>Search for Your Links Here</h2>
+        <img src="{{url_for('static', filename='images.jpeg')}}" class="main-img"/>
+        <br/>
+        <div class="input-form">
+            <form action="{{request.path}}" method="post">
+                <input type="text" name="short_link" placeholder="Paste Your Short Link here" class="form-url"
+                       required/>
+                <input type="submit" value="Search" class="btn-submit"/>
+            </form>
+            {% if result %}
+
+            {% if user_link != None %}
+            <div class="display-box2">
+                <a href="{{user_link.original_link}}">{{user_link.original_link}}</a>
+            </div>
+            {% else %}
+            <div class="red-box">
+                Not Found
+            </div>
+            {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div></div>
+{% endblock %}

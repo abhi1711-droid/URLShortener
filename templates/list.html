@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %} List {% endblock %}
+{% block head %}
+
+<meta charset="UTF-8">
+<title>List</title>
+{% endblock %}
+{% block style %}
+h3 {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center
+}
+{% endblock %}
+{% block content %}
+<div id="Container">
+    <h2> List Of All Short Urls Generated</h2>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Original Link</th>
+            <th>Short Link</th>
+            <th>Created On</th>
+        </tr>
+        {%- for Urls in query %}
+        <tr>
+            <td>
+                <a href="{{Urls.original_link}}">{{Urls.original_link}}</a>
+            </td>
+            <td>
+                <a href="{{Urls.original_link}}">{{Urls.short_link}}</a>
+            </td>
+            <td>
+                {{Urls.created_on}}
+            </td>
+        </tr>
+        {%- endfor %}
+    </table>
+</div>
+<div></div>
+{% endblock %}
